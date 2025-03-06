@@ -1,0 +1,13 @@
+RewriteEngine On
+
+# Redirect from :8080 to correct URL
+RewriteCond %{HTTP_HOST} ^hms\.up\.railway\.app:8080$ [NC]
+RewriteRule ^(.*)$ https://hms.up.railway.app/admin/$1 [R=301,L]
+
+# Ensure index.php loads correctly
+DirectoryIndex index.php
+
+# Handle requests properly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?$1 [L,QSA]
