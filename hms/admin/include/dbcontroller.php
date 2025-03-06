@@ -1,15 +1,23 @@
 <?php
-$DB_host = "localhost";
-$DB_user = "root";
-$DB_pass = "";
-$DB_name = "ingram";
-try
-{
- $DB_con = new PDO("mysql:host={$DB_host};dbname={$DB_name}",$DB_user,$DB_pass);
- $DB_con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-}
-catch(PDOException $e)
-{
- $e->getMessage();
+class DBController {
+    private $host = "interchange.proxy.rlwy.net"; // Railway MySQL Host
+    private $user = "root"; // Railway MySQL Username
+    private $password = "HeRlbEZqGItFQHokaJcDoCvmOlZhjWOr"; // Railway MySQL Password
+    private $database = "railway"; // Railway Database Name
+    private $port = 53082; // Railway MySQL Port
+    public $conn;
+
+    public function __construct() {
+        try {
+            $this->conn = new PDO(
+                "mysql:host={$this->host};port={$this->port};dbname={$this->database}", 
+                $this->user, 
+                $this->password
+            );
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            die("Database Connection Failed: " . $e->getMessage());
+        }
+    }
 }
 ?>
